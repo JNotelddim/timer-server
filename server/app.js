@@ -1,14 +1,11 @@
 import express from "express";
 
+import dotenv from "./env.js";
 import router from "./controllers/index.js";
 import models, { connectDb } from "./models/index.js";
 
 const app = express();
 app.use("/", router);
-
-// app.listen(port, () =>
-//   console.log(`Timer server listening at http://localhost:${port}`)
-// );
 
 connectDb().then(async () => {
   app.listen(process.env.PORT, () =>

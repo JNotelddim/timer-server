@@ -5,7 +5,7 @@ import User from "./userModel.js";
 
 const password = process.env.API_PASS;
 const dbName = "timer-express";
-console.log("password used: ", password);
+console.log("(index) password used: ", password);
 
 const connectDb = () =>
   mongoose.connect(
