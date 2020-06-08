@@ -1,14 +1,16 @@
-const express = require("express");
+import express from "express";
+
 const router = express.Router();
 
-router.get("/", (req, res) => res.send("get workouts"));
+router.get("/", (req, res) => {
+  res.send("get workouts");
+});
 router.get("/:workoutId", (req, res) =>
   res.send(`get workout id: ${req.params.workoutId}`)
 );
 router.put("/", (req, res) => {
-  // const { title, contents } = req.body;
-  console.log(req.body);
+  console.log(req);
   return res.send(`put workout:`);
 });
 
-module.exports = router;
+export default router;

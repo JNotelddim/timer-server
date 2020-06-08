@@ -1,7 +1,7 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
 
-const workouts = require("./workouts");
+import workouts from "./workouts.js";
 
 router.use("/workouts", workouts);
 
@@ -9,4 +9,4 @@ router.use("/workouts", workouts);
 router.get("/login", (req, res) => res.send("login user: ..."));
 router.get("/signout", (req, res) => res.send("sign out user: ..."));
 
-module.exports = router;
+export default router;
