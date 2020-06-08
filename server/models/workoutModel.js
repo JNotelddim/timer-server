@@ -6,10 +6,7 @@ const workoutSchema = new mongoose.Schema({
     unique: false,
     required: true,
   },
-  content: {
-    type: Object,
-    required: false,
-  },
+  content: String,
 });
 
 const workout = mongoose.model("Workout", workoutSchema);
