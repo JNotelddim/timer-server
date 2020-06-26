@@ -7,6 +7,7 @@ const workoutSchema = new mongoose.Schema({
     unique: false,
     required: true,
   },
+  //TODO: refactor "content" into sets: Array<{duration, title?, id?, exercises?: [], ...}>
   content: String,
   user: {
     type: Schema.Types.ObjectId,
