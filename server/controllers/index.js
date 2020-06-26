@@ -10,13 +10,31 @@ const { User } = models;
 router.use("/workouts", workouts);
 
 router.get("/login", (req, res) => {
-  //validate password,
-  // const { email, password } = req.body;
-  // User.find({ email });
-  // validatePassword();
-  //handle validation error
-  //fail if validation doesn't success
-  //otherwise, return 200?
+  const { email, password } = req.body;
+  //find the user by email
+  User.find({ email }, (err, docs) => {
+    //fail if there's an error
+    if (err) return res.status(501).send("Login / User query error.");
+
+    //fail if the email doesn't apply to any accounts
+    if (docs.length === 0)
+      return res.status(401).send("Login / Invalid credentials.");
+
+    const { salt, hash, iterations, id, email } = docs[0];
+    //confirm that they've entered the correct credentials.
+    validatePassword(hash, salt, iterations, password)
+      .then((isValid) => {
+        //return 200 if successful
+        if (isValid) res.status(200).send("Authenticated.");
+        //fail if validation doesn't succeed
+        else res.status(401).send("Login / Invalid credentials.");
+      })
+      .catch((err) => {
+        //handle validation error
+        console.log(err);
+        res.status(501).send("Login / Validation Error");
+      });
+  });
 });
 
 router.post("/signup", (req, res) => {
@@ -24,7 +42,6 @@ router.post("/signup", (req, res) => {
 
   //check if user email is in use
   User.find({ email }, (err, docs) => {
-    console.log(err, docs);
     //check if it failed
     if (err)
       return res
