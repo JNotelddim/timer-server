@@ -23,7 +23,13 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   // I don't know if this is necessary?
-  sessions: [{ type: Schema.Types.ObjectId, required: false, ref: "Session" }],
+  sessions: [
+    {
+      type: Schema.Types.ObjectId,
+      required: false,
+      ref: "Session",
+    },
+  ],
 });
 
 const user = mongoose.model("User", userSchema);

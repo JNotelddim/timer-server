@@ -39,6 +39,7 @@ router.get("/login", (req, res) => {
               session.save();
 
               res.cookie("session", session._id, { maxAge: 36000000 });
+              res.cookie("user", userID, { maxAge: 36000000 });
               res.status(200).send("Authenticated.");
             }
           });

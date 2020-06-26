@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const workoutSchema = new mongoose.Schema({
   title: {
@@ -7,6 +8,11 @@ const workoutSchema = new mongoose.Schema({
     required: true,
   },
   content: String,
+  user: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
 });
 
 const workout = mongoose.model("Workout", workoutSchema);
