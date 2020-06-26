@@ -10,9 +10,11 @@ export const hashPassword = (password) => {
     const salt = randomBytes(128).toString("base64");
     const iterations = 10000;
     pbkdf2(password, salt, iterations, LENGTH, DIGEST, (err, derivedKey) => {
-      if (err) reject(err);
-
-      accept({ salt, hash: derivedKey, iterations });
+      if (err) {
+        reject(err);
+      } else {
+        accept({ salt, hash: derivedKey, iterations });
+      }
     });
   });
 };
@@ -26,14 +28,13 @@ export const validatePassword = (hash, salt, iterations, attemptedPassword) => {
       LENGTH,
       DIGEST,
       (err, derivedKey) => {
-        console.log(
-          `attemptedPassword: ${attemptedPassword}, salt: ${salt}, iterations: ${iterations}, length: ${LENGTH}, digest: ${DIGEST}, \nhash: ${hash}, \nderivedKey: ${derivedKey}`
-        );
-
-        console.log(derivedKey == hash);
-        if (err) reject(err);
-        else if (derivedKey == hash) accept(true);
-        else reject(false);
+        if (err) {
+          reject(err);
+        } else if (derivedKey == hash) {
+          accept(true);
+        } else {
+          reject(false);
+        }
       }
     );
   });

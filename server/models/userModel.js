@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+const { Schema } = mongoose;
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -21,6 +22,8 @@ const userSchema = new mongoose.Schema({
     unique: false,
     required: true,
   },
+  // I don't know if this is necessary?
+  sessions: [{ type: Schema.Types.ObjectId, required: false, ref: "Session" }],
 });
 
 const user = mongoose.model("User", userSchema);

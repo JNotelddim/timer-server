@@ -5,7 +5,7 @@ import models from "../models/index.js";
 import workouts from "./workouts.js";
 import { hashPassword, validatePassword } from "./passwordManagement.js";
 
-const { User } = models;
+const { User, Session } = models;
 
 router.use("/workouts", workouts);
 
@@ -20,18 +20,28 @@ router.get("/login", (req, res) => {
     if (docs.length === 0)
       return res.status(401).send("Login / Invalid credentials.");
 
-    const { salt, hash, iterations, id, email } = docs[0];
+    const { salt, hash, iterations, id: userID, email } = docs[0];
+
     //confirm that they've entered the correct credentials.
     validatePassword(hash, salt, iterations, password)
       .then((isValid) => {
-        //return 200 if successful
-        if (isValid) res.status(200).send("Authenticated.");
+        //return new session ID if successful
+        if (isValid) {
+          const session = new Session({
+            user: userID,
+            expiration: Date.now() + 36000000, //+12hrs
+          });
+          session.save();
+
+          res.cookie("session", session._id, { maxAge: 36000000 });
+          res.status(200).send("Authenticated.");
+        }
+
         //fail if validation doesn't succeed
         else res.status(401).send("Login / Invalid credentials.");
       })
       .catch((err) => {
         //handle validation error
-        console.log(err);
         res.status(501).send("Login / Validation Error");
       });
   });
