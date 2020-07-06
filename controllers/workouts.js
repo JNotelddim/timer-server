@@ -62,7 +62,6 @@ router.get("/:workoutId", (req, res) => {
 router.put("/", (req, res) => {
   const { user } = req.cookies;
 
-  console.log(req.body);
   const { title, content } = req.body;
   if (!title || !content) {
     res.status(400).send("Invalid workout.");
