@@ -1,11 +1,9 @@
-# Timer
-This is a combination of a server and front-end in one repo.
-The server lives in `/server` and the front-end in `/client`.
+# Timer (Server
 
-## Server
 Uses Express.js, crypto, Mongoose, and dotenv.
+Deployed on Heroku, with an mongoLab db.
 
 to run, `cd server && npm run start`
 
-## Front-End
-TODO
+_____
+find Front-end apps to come @ "https://github.com/JNotelddim/..." `timer-web`, `timer-ios`, `timer-android`, `timer-rn` (maybe :P)
