@@ -1,11 +1,12 @@
 {
-  "name": "client",
+  "name": "timer-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon node app.js"
+    "start": "node app.js",
+    "dev": "nodemon node app.js"
   },
   "engines": {
     "node": ">=12.18.0"

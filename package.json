@@ -1,0 +1,22 @@
+{
+  "name": "timer",
+  "version": "1.0.0",
+  "description": "This is a combination of a server and front-end in one repo. The server lives in `/server` and the front-end in `/client`.",
+  "main": "server/app.js",
+  "scripts": {
+    "server": "node server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JNotelddim/timer.git"
+  },
+  "keywords": [
+    "heroku"
+  ],
+  "author": "jnotelddim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JNotelddim/timer/issues"
+  },
+  "homepage": "https://github.com/JNotelddim/timer#readme"
+}
