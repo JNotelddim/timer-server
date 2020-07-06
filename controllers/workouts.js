@@ -31,7 +31,7 @@ const validateSession = (req, res, next) => {
         }
       }
     }
-  });
+  }).catch((err) => res.status(501).send("Account search failed."));
 };
 
 router.use(validateSession);
@@ -44,7 +44,7 @@ router.get("/", (req, res) => {
     } else {
       res.send(docs);
     }
-  });
+  }).catch((err) => res.status(501).send("Workout query failed."));
 });
 
 router.get("/:workoutId", (req, res) => {
@@ -56,7 +56,7 @@ router.get("/:workoutId", (req, res) => {
     } else {
       res.send(doc);
     }
-  });
+  }).catch((err) => res.status(501).send("Workout query failed."));
 });
 
 router.put("/", (req, res) => {

@@ -42,7 +42,7 @@ router.get("/login", (req, res) => {
               res.cookie("user", userID, { maxAge: 36000000 });
               res.status(200).send("Authenticated.");
             }
-          });
+          }).catch((err) => res.status(501).send("Session query failed."));
         }
 
         //fail if validation doesn't succeed
@@ -63,7 +63,7 @@ router.get("/logout", (req, res) => {
     } else {
       res.status(200).send("Logged out.");
     }
-  });
+  }).catch((err) => res.status(501).send("Session query failed."));
 });
 
 router.post("/signup", (req, res) => {
@@ -90,7 +90,7 @@ router.post("/signup", (req, res) => {
       })
       //handle hashing error
       .catch((err) => res.status(501).send(err));
-  }).exec();
+  }).catch((err) => res.status(501).send("User query failed."));
 });
 
 export default router;
