@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon node app.js"
+    "dev": "nodemon node app.js --unhandled-rejections=strict"
   },
   "engines": {
     "node": ">=12.18.0"

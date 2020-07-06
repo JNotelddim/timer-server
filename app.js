@@ -13,8 +13,10 @@ app.use(cookieParser());
 
 app.use("/", router);
 
-connectDb().then(async () => {
-  app.listen(process.env.PORT, () =>
-    console.log(`Timer api listening on port ${process.env.PORT}!`)
-  );
-});
+connectDb()
+  .then(async () => {
+    app.listen(process.env.PORT, () =>
+      console.log(`Timer api listening on port ${process.env.PORT}!`)
+    );
+  })
+  .catch((err) => console.log(err));

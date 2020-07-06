@@ -70,7 +70,7 @@ router.put("/", (req, res) => {
   }
 
   const workout = new Workout({ title, content, user });
-  workout.save();
+  workout.save().catch((err) => res.status(501).send("Workout save failed."));
 
   res.send(workout);
 });

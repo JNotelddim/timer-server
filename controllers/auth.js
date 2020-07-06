@@ -36,7 +36,9 @@ router.get("/login", (req, res) => {
                 user: userID,
                 expiration: Date.now() + 36000000, //+12hrs
               });
-              session.save();
+              session
+                .save()
+                .catch((err) => res.status(501).send("Saving session failed."));
 
               res.cookie("session", session._id, { maxAge: 36000000 });
               res.cookie("user", userID, { maxAge: 36000000 });
@@ -85,7 +87,9 @@ router.post("/signup", (req, res) => {
       .then(({ salt, hash, iterations }) => {
         //create the new user entry
         const newUser = new User({ email, salt, hash, iterations });
-        newUser.save();
+        newUser
+          .save()
+          .catch((err) => res.status(501).send("Saving new user failed."));
         return res.json(newUser);
       })
       //handle hashing error
