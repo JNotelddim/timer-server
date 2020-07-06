@@ -1,22 +1,25 @@
 {
-  "name": "timer",
+  "name": "timer-server",
   "version": "1.0.0",
-  "description": "This is a combination of a server and front-end in one repo. The server lives in `/server` and the front-end in `/client`.",
-  "main": "server/app.js",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
   "scripts": {
-    "server": "node server/app.js"
+    "start": "node app.js",
+    "dev": "nodemon node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/JNotelddim/timer.git"
+  "engines": {
+    "node": ">=12.18.0"
   },
-  "keywords": [
-    "heroku"
-  ],
   "author": "jnotelddim",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/JNotelddim/timer/issues"
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.18"
   },
-  "homepage": "https://github.com/JNotelddim/timer#readme"
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }
