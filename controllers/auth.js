@@ -7,9 +7,9 @@ const { User, Session } = models;
 
 const router = express.Router();
 
-router.get("/login", (req, res) => {
-  const { email, password } = req.body;
-  console.log(`Login, ${email}, ${password}`);
+router.post("/login", (req, res) => {
+  const { email, password } = req.body.data;
+
   //find the user by email
   User.find({ email }, (err, docs) => {
     //fail if there's an error
@@ -52,6 +52,7 @@ router.get("/login", (req, res) => {
         else res.status(401).send("Login / Invalid credentials.");
       })
       .catch((err) => {
+        console.error(err);
         //handle validation error
         res.status(500).send("Login / Validation Error");
       });
@@ -70,8 +71,7 @@ router.get("/logout", (req, res) => {
 });
 
 router.post("/signup", (req, res) => {
-  const { email, password } = req.body;
-  console.log(`signup, ${email}, ${password}`);
+  const { email, password } = req.body.data;
 
   //check if user email is in use
   User.find({ email }, (err, docs) => {
@@ -95,7 +95,10 @@ router.post("/signup", (req, res) => {
         return res.json(newUser);
       })
       //handle hashing error
-      .catch((err) => res.status(500).send(err));
+      .catch((err) => {
+        console.error(err);
+        res.status(500).send(err);
+      });
   }).catch((err) => res.status(500).send("User query failed."));
 });
 
