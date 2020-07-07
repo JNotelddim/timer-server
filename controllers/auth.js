@@ -92,7 +92,8 @@ router.post("/signup", (req, res) => {
         newUser
           .save()
           .catch((err) => res.status(500).send("Saving new user failed."));
-        return res.json(newUser);
+
+        return res.status(200).json({ email: newUser.email });
       })
       //handle hashing error
       .catch((err) => {
