@@ -31,7 +31,7 @@ const validateSession = (req, res, next) => {
         }
       }
     }
-  }).catch((err) => res.status(501).send("Account search failed."));
+  }).catch((err) => res.status(500).send("Account search failed."));
 };
 
 router.use(validateSession);
@@ -40,11 +40,11 @@ router.get("/", (req, res) => {
   const { user } = req.cookies;
   Workout.find({ user }, (err, docs) => {
     if (err) {
-      res.status(501).send("DB query for user workouts failed.");
+      res.status(500).send("DB query for user workouts failed.");
     } else {
       res.send(docs);
     }
-  }).catch((err) => res.status(501).send("Workout query failed."));
+  }).catch((err) => res.status(500).send("Workout query failed."));
 });
 
 router.get("/:workoutId", (req, res) => {
@@ -52,11 +52,11 @@ router.get("/:workoutId", (req, res) => {
   const { user } = req.cookies;
   Workout.find({ user, _id: workoutId }, (err, doc) => {
     if (err) {
-      res.status(501).send("DB query for user workout by id failed.");
+      res.status(500).send("DB query for user workout by id failed.");
     } else {
       res.send(doc);
     }
-  }).catch((err) => res.status(501).send("Workout query failed."));
+  }).catch((err) => res.status(500).send("Workout query failed."));
 });
 
 router.put("/", (req, res) => {
@@ -69,7 +69,7 @@ router.put("/", (req, res) => {
   }
 
   const workout = new Workout({ title, content, user });
-  workout.save().catch((err) => res.status(501).send("Workout save failed."));
+  workout.save().catch((err) => res.status(500).send("Workout save failed."));
 
   res.send(workout);
 });
