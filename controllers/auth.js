@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get("/login", (req, res) => {
   const { email, password } = req.body;
+  console.log(`Login, ${email}, ${password}`);
   //find the user by email
   User.find({ email }, (err, docs) => {
     //fail if there's an error
@@ -70,6 +71,7 @@ router.get("/logout", (req, res) => {
 
 router.post("/signup", (req, res) => {
   const { email, password } = req.body;
+  console.log(`signup, ${email}, ${password}`);
 
   //check if user email is in use
   User.find({ email }, (err, docs) => {
