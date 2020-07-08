@@ -7,6 +7,19 @@ const { User, Session } = models;
 
 const router = express.Router();
 
+//Helper FN
+const handleNewSession = (userID, res) => {
+  const session = new Session({
+    user: userID,
+    expiration: Date.now() + 36000000, //+12hrs
+  });
+  session.save().catch((err) => res.status(500).send("Saving session failed."));
+
+  res.cookie("session", session._id, { maxAge: 36000000 });
+  res.cookie("user", userID, { maxAge: 36000000 });
+};
+
+// LOGIN
 router.post("/login", (req, res) => {
   const { email, password } = req.body.data;
 
@@ -33,17 +46,9 @@ router.post("/login", (req, res) => {
                 .status(500)
                 .send("Logout / Failed to clear existing sessions");
             } else {
-              const session = new Session({
-                user: userID,
-                expiration: Date.now() + 36000000, //+12hrs
-              });
-              session
-                .save()
-                .catch((err) => res.status(500).send("Saving session failed."));
-
-              res.cookie("session", session._id, { maxAge: 36000000 });
-              res.cookie("user", userID, { maxAge: 36000000 });
-              res.status(200).send("Authenticated.");
+              handleNewSession(userID, res);
+              // res.status(200).send("Authenticated.");
+              res.status(200).json({ email });
             }
           }).catch((err) => res.status(500).send("Session query failed."));
         }
@@ -60,17 +65,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/logout", (req, res) => {
-  const { session } = req.cookies;
-  Session.findByIdAndDelete(session, (err, result) => {
-    if (err) {
-      res.status(500).send("Failed to close session");
-    } else {
-      res.status(200).send("Logged out.");
-    }
-  }).catch((err) => res.status(500).send("Session query failed."));
-});
-
+// SIGNUP
 router.post("/signup", (req, res) => {
   const { email, password } = req.body.data;
 
@@ -94,6 +89,8 @@ router.post("/signup", (req, res) => {
           .save()
           .catch((err) => res.status(500).send("Saving new user failed."));
 
+        handleNewSession(newUser._id, res);
+
         return res.status(200).json({ email: newUser.email });
       })
       //handle hashing error
@@ -102,6 +99,18 @@ router.post("/signup", (req, res) => {
         res.status(500).send(err);
       });
   }).catch((err) => res.status(500).send("User query failed."));
+});
+
+// LOGOUT
+router.get("/logout", (req, res) => {
+  const { session } = req.cookies;
+  Session.findByIdAndDelete(session, (err, result) => {
+    if (err) {
+      res.status(500).send("Failed to close session");
+    } else {
+      res.status(200).send("Logged out.");
+    }
+  }).catch((err) => res.status(500).send("Session query failed."));
 });
 
 export default router;
