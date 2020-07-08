@@ -45,7 +45,8 @@ export const validatePassword = (hash, salt, iterations, attemptedPassword) => {
         } else if (derivedKey == hash) {
           accept(true);
         } else {
-          reject("Derived key !== hash");
+          accept(false);
+          // reject("Derived key !== hash");
         }
       }
     );
