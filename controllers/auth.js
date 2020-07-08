@@ -53,6 +53,7 @@ router.post("/login", (req, res) => {
       })
       .catch((err) => {
         console.error(err);
+
         //handle validation error
         res.status(500).send("Login / Validation Error");
       });
