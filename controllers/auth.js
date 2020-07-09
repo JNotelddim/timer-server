@@ -21,7 +21,7 @@ const handleNewSession = (userID, res) => {
 
 // LOGIN
 router.post("/login", (req, res) => {
-  const { email, password } = req.body.data;
+  const { email, password } = req.body;
 
   //find the user by email
   User.find({ email }, (err, docs) => {
@@ -67,7 +67,7 @@ router.post("/login", (req, res) => {
 
 // SIGNUP
 router.post("/signup", (req, res) => {
-  const { email, password } = req.body.data;
+  const { email, password } = req.body;
 
   //check if user email is in use
   User.find({ email }, (err, docs) => {
