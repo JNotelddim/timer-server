@@ -20,6 +20,7 @@ const handleNewSession = (userID, res) => {
     maxAge: 36000000,
     httpOnly: false,
     sameSite: "None",
+    secure: true,
   });
 };
 
