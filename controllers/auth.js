@@ -108,6 +108,8 @@ router.get("/logout", (req, res) => {
     if (err) {
       res.status(500).send("Failed to close session");
     } else {
+      res.clearCookie("user");
+      res.clearCookie("session");
       res.status(200).send("Logged out.");
     }
   }).catch((err) => res.status(500).send("Session query failed."));
