@@ -16,7 +16,11 @@ const handleNewSession = (userID, res) => {
   session.save().catch((err) => res.status(500).send("Saving session failed."));
 
   res.cookie("session", session._id, { maxAge: 36000000, httpOnly: false });
-  res.cookie("user", userID, { maxAge: 36000000, httpOnly: false });
+  res.cookie("user", userID, {
+    maxAge: 36000000,
+    httpOnly: false,
+    sameSite: "Lax",
+  });
 };
 
 // LOGIN
