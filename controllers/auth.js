@@ -19,7 +19,7 @@ const handleNewSession = (userID, res) => {
   res.cookie("user", userID, {
     maxAge: 36000000,
     httpOnly: false,
-    sameSite: "Lax",
+    sameSite: "None",
   });
 };
 
