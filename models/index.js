@@ -1,15 +1,20 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-import Workout from "./workoutModel.js";
-import User from "./userModel.js";
-import Session from "./sessionModel.js";
+import Workout from './workoutModel.js';
+import User from './userModel.js';
+import Session from './sessionModel.js';
 
-const dbuser = process.env.DB_USER;
-const dbpassword = process.env.DB_PASS;
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASS;
+const dbName = process.env.DB_NAME;
 
 const connectDb = () =>
   mongoose.connect(
-    `mongodb://${dbuser}:${dbpassword}@ds141043.mlab.com:41043/heroku_bmk0w74z`
+    `mongodb+srv://${dbUser}:${dbPassword}@timercluster-7uy5n.mongodb.net/${dbName}?retryWrites=true&w=majority`,
+    {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    }
   );
 
 const models = { Workout, User, Session };
